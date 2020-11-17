@@ -53,8 +53,7 @@ export const Login = () => {
         },
 
         onSubmit: values => {
-            debugger
-            dispatch(loginTC(values));
+                        dispatch(loginTC(values));
         },
     });
 
