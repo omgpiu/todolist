@@ -5,7 +5,7 @@ import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {AxiosError} from 'axios';
 
 
-export const loginTC = createAsyncThunk<undefined, LoginParamsType, {
+const login = createAsyncThunk<undefined, LoginParamsType, {
     rejectValue: { errors: Array<string>, fieldsErrors?: Array<FieldErrorType> }
 }>('auth/login', async (param, {dispatch, rejectWithValue}) => {
     dispatch(setAppStatusAC({status: 'loading'}));               // Сделал деструктуризацию thunkAPI
@@ -26,7 +26,7 @@ export const loginTC = createAsyncThunk<undefined, LoginParamsType, {
     }
 
 });
-export const logoutTC = createAsyncThunk('auth/logout', async (param, {dispatch, rejectWithValue}) => {
+const logout = createAsyncThunk('auth/logout', async (param, {dispatch, rejectWithValue}) => {
     dispatch(setAppStatusAC({status: 'loading'}));                                         // Сделал деструктуризацию thunkAPI
     const res = await authAPI.logout();
     try {
@@ -44,7 +44,15 @@ export const logoutTC = createAsyncThunk('auth/logout', async (param, {dispatch,
 
 });
 
-const slice = createSlice({
+
+export const asyncActions = {
+    logout,
+    login
+}
+
+
+
+export const slice = createSlice({
     name: 'auth',
     initialState: {
         isLoggedIn: false
@@ -55,10 +63,10 @@ const slice = createSlice({
         }
     },
     extraReducers: builder => {
-        builder.addCase(loginTC.fulfilled, (state) => {
+        builder.addCase(login.fulfilled, (state) => {
             state.isLoggedIn = true;
         });
-        builder.addCase(logoutTC.fulfilled, (state) => {
+        builder.addCase(logout.fulfilled, (state) => {
             state.isLoggedIn = false;
         });
     }

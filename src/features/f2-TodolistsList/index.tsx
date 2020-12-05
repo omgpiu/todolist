@@ -1,8 +1,22 @@
-import * as tasksActions from './tasks-actions';
-import * as todoListsActions from './todolists-actions';
+import {asyncActions as tasksAsyncActions} from './tasks-reducer';
+import {asyncActions as todoListsAsyncActions, slice} from './todolists-reducer';
+import {TodolistsList} from './TodolistsList';
 
+
+
+
+
+const todoListsActions = {
+    ...todoListsAsyncActions,
+    ...slice.actions
+};
+const taskActions = {
+    ...tasksAsyncActions,
+
+};
 export {
-    tasksActions,
-    todoListsActions
+    taskActions,
+    todoListsActions,
+    TodolistsList
 };
 

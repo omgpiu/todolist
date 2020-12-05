@@ -11,11 +11,9 @@ import {
 } from '@material-ui/core';
 import {useSelector} from 'react-redux';
 import {FormikHelpers, useFormik} from 'formik';
-
-import {useAppDispatch} from '../../../app/a1-bll/store';
+import {useActions, useAppDispatch} from '../../../app/a1-bll/store';
 import {Redirect} from 'react-router-dom';
-import {loginTC} from '../l1-bll/auth-reducer';
-import {authSelectors} from '../l1-bll';
+import {authActions, authSelectors} from '../l1-bll';
 
 
 type FormikErrorType = {
@@ -60,8 +58,8 @@ export const Login = () => {
         },
 
         onSubmit: async (values, formikHelpers: FormikHelpers<FormikValuesType>) => {
-            const action = await dispatch(loginTC(values));
-            if (loginTC.rejected.match(action)) {
+            const action = await dispatch(authActions.login(values));
+            if (authActions.login.rejected.match(action)) {
                 if (action.payload?.fieldsErrors?.length) {
                     const error = action.payload?.fieldsErrors[0];
                     formikHelpers.setFieldError(error.field, error.error);

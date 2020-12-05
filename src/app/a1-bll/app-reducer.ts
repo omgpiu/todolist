@@ -1,7 +1,7 @@
 import {authAPI} from '../../api/todolists-api';
 import {handleServerAppError} from '../../utils/error-utils';
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
-import { setIsLoggedInAC } from '../../features/f1-login/l1-bll/auth-reducer';
+import {setIsLoggedInAC} from '../../features/f1-login/l1-bll/auth-reducer';
 
 const initialState: InitialStateType = {
     status: 'idle',
@@ -9,7 +9,7 @@ const initialState: InitialStateType = {
     isInitialized: false
 };
 
-export const initializeAppTC = createAsyncThunk('app/initializeApp', async (param, {dispatch}) => {
+const initializeApp = createAsyncThunk('app/initializeApp', async (param, {dispatch}) => {
     const res = await authAPI.me();
     if (res.data.resultCode === 0) {
         dispatch(setIsLoggedInAC({isLoggedIn: true}));
@@ -18,7 +18,9 @@ export const initializeAppTC = createAsyncThunk('app/initializeApp', async (para
     }
     //возвращает в любом случае undefined return можно не писать
 });
-
+export const asyncActions = {
+    initializeApp
+};
 
 const slice = createSlice({
     name: 'app',
@@ -32,7 +34,7 @@ const slice = createSlice({
         },
     },
     extraReducers: builder => {
-        builder.addCase(initializeAppTC.fulfilled, (state) => {
+        builder.addCase(initializeApp.fulfilled, (state) => {
             state.isInitialized = true;
         });
     }

@@ -13,13 +13,11 @@ import {
 import {Menu} from '@material-ui/icons';
 import {ErrorSnackbar} from '../../components/ErrorSnackbar/ErrorSnackbar';
 import {useDispatch, useSelector} from 'react-redux';
-import {initializeAppTC} from '../a1-bll/app-reducer';
+import {asyncActions} from '../a1-bll/app-reducer';
 import {Redirect, Route, Switch} from 'react-router-dom';
-import {TodolistsList} from '../../features/f2-TodolistsList/TodolistsList';
-import {Login} from '../../features/f1-login/l1-ui/Login';
-import {logoutTC} from '../../features/f1-login/l1-bll/auth-reducer';
-import {authSelectors} from '../../features/f1-login/l1-bll';
+import {authActions, authSelectors, Login} from '../../features/f1-login/l1-bll';
 import {appSelectors} from '../a1-bll';
+import {TodolistsList} from '../../features/f2-TodolistsList';
 
 
 const App = ({demo = false}: PropsType) => {
@@ -29,10 +27,10 @@ const App = ({demo = false}: PropsType) => {
     const dispatch = useDispatch();
     useEffect(() => {
 
-        dispatch(initializeAppTC());
+        dispatch(asyncActions.initializeApp());
     }, []);
     const logOutHandler = useCallback(() => {
-        dispatch(logoutTC());
+        dispatch(authActions.logout());
     }, []);
     if (!isInitialized) {
         return <div style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>

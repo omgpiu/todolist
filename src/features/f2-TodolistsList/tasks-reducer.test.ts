@@ -1,9 +1,11 @@
 import {tasksReducer, TasksStateType} from './tasks-reducer';
 
 import {TaskPriorities, TaskStatuses} from '../../api/todolists-api';
-import {addTaskTC, fetchTasksTC, removeTaskTC, updateTaskTC} from './tasks-actions';
-import {addTodolistTC, fetchTodolistsTC, removeTodolistTC} from './todolists-actions';
+import {useActions} from '../../app/a1-bll/store';
+import {taskActions, todoListsActions} from './index';
 
+const {removeTodolist, addTodolist, fetchTodolists} = useActions(todoListsActions);
+const {addTask, updateTask, removeTask, fetchTasks} = useActions(taskActions);
 let startState: TasksStateType = {};
 beforeEach(() => {
     startState = {
@@ -41,7 +43,7 @@ beforeEach(() => {
 test('correct task should be deleted from correct array', () => {
 
     const param = {taskId: '2', todolistId: 'todolistId2'};
-    const action = removeTaskTC.fulfilled(param, '', param);
+    const action = removeTask.fulfilled(param, '', param);
     const endState = tasksReducer(startState, action);
     expect(endState['todolistId1'].length).toBe(3);
     expect(endState['todolistId2'].length).toBe(2);
@@ -63,7 +65,7 @@ test('correct task should be added to correct array', () => {
     };
 
 
-    const action = addTaskTC.fulfilled(task, 'requestId', {title: task.title, todolistId: task.todoListId});
+    const action = addTask.fulfilled(task, 'requestId', {title: task.title, todolistId: task.todoListId});
     const endState = tasksReducer(startState, action);
 
     expect(endState['todolistId1'].length).toBe(3);
@@ -74,7 +76,7 @@ test('correct task should be added to correct array', () => {
 });
 test('status of specified task should be changed', () => {
     const updateModel = {taskId: '2', model: {status: TaskStatuses.New}, todolistId: 'todolistId2'};
-    const action = updateTaskTC.fulfilled(updateModel, 'requestId', updateModel);
+    const action = updateTask.fulfilled(updateModel, 'requestId', updateModel);
     const endState = tasksReducer(startState, action);
 
     expect(endState['todolistId1'][1].status).toBe(TaskStatuses.Completed);
@@ -82,7 +84,7 @@ test('status of specified task should be changed', () => {
 });
 test('title of specified task should be changed', () => {
     const updateModel = {taskId: '2', model: {title: 'yogurt'}, todolistId: 'todolistId2'};
-    const action = updateTaskTC.fulfilled(updateModel, 'requestId',
+    const action = updateTask.fulfilled(updateModel, 'requestId',
         updateModel);
     const endState = tasksReducer(startState, action);
     expect(endState['todolistId1'][1].title).toBe('JS');
@@ -98,8 +100,8 @@ test('new array should be added when new todolist is added', () => {
             addedDate: ''
         }
     };
-    const action = addTodolistTC.fulfilled(
-        newModel,'requestId',newModel.todolist.title);
+    const action = addTodolist.fulfilled(
+        newModel, 'requestId', newModel.todolist.title);
 
     const endState = tasksReducer(startState, action);
 
@@ -116,7 +118,7 @@ test('new array should be added when new todolist is added', () => {
 test('propertry with todolistId should be deleted', () => {
 
 
-    const action = removeTodolistTC.fulfilled({id: 'todolistId2'}, 'requestId', 'todolistId2');
+    const action = removeTodolist.fulfilled({id: 'todolistId2'}, 'requestId', 'todolistId2');
 
     const endState = tasksReducer(startState, action);
 
@@ -134,7 +136,7 @@ test('empty arrays should be added when we set todolists', () => {
             {id: '2', title: 'title 2', order: 0, addedDate: ''}
         ]
     };
-    const action = fetchTodolistsTC.fulfilled(updateModel, 'requestId');
+    const action = fetchTodolists.fulfilled(updateModel, 'requestId');
 
     const endState = tasksReducer({}, action);
 
@@ -145,7 +147,7 @@ test('empty arrays should be added when we set todolists', () => {
     expect(endState['2']).toBeDefined();
 });
 test('tasks should be added for todolist', () => {
-    const action = fetchTasksTC.fulfilled({
+    const action = fetchTasks.fulfilled({
         tasks: startState['todolistId1'],
         todolistId: 'todolistId1'
     }, 'requestId', 'todolistId1');
