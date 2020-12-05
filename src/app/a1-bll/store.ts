@@ -7,6 +7,7 @@ import {tasksReducer} from '../../features/f2-TodolistsList/tasks-reducer';
 import {todolistsReducer} from '../../features/f2-TodolistsList/todolists-reducer';
 import {authReducer} from '../../features/f1-login/l1-bll/auth-reducer';
 import {useMemo} from 'react';
+import {FieldErrorType} from '../../api/todolists-api';
 
 
 // объединяя reducer-ы с помощью combineReducers,
@@ -39,4 +40,9 @@ export function useActions<T extends ActionCreatorsMapObject<any>>(actions: T) {
     return useMemo(() => {
         return bindActionCreators(actions, dispatch);
     }, []);
+}
+
+export type ThunkErrorType = {
+    errors: Array<string>
+    fieldsErrors?: Array<FieldErrorType>
 }

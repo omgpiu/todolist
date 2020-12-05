@@ -1,14 +1,15 @@
 import {setAppStatusAC} from '../../../app/a1-bll/app-reducer';
-import {authAPI, FieldErrorType, LoginParamsType} from '../../../api/todolists-api';
+import {authAPI, LoginParamsType} from '../../../api/todolists-api';
 import {handleServerAppError, handleServerNetworkError} from '../../../utils/error-utils';
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {AxiosError} from 'axios';
+import {ThunkErrorType} from '../../../app/a1-bll/store';
 
 
 const login = createAsyncThunk<undefined, LoginParamsType, {
-    rejectValue: { errors: Array<string>, fieldsErrors?: Array<FieldErrorType> }
+    rejectValue: ThunkErrorType
 }>('auth/login', async (param, {dispatch, rejectWithValue}) => {
-    dispatch(setAppStatusAC({status: 'loading'}));               // Сделал деструктуризацию thunkAPI
+    dispatch(setAppStatusAC({status: 'loading'}));
     try {
         const res = await authAPI.login(param);
         if (res.data.resultCode === 0) {
@@ -48,8 +49,7 @@ const logout = createAsyncThunk('auth/logout', async (param, {dispatch, rejectWi
 export const asyncActions = {
     logout,
     login
-}
-
+};
 
 
 export const slice = createSlice({

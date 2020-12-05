@@ -15,7 +15,6 @@ const instance = axios.create({
 // api
 export const authAPI = {
     login(data: LoginParamsType) {
-        debugger
         return instance.post<ResponseType<{ userId: number }>>('auth/login', data);
     },
     me() {
@@ -68,13 +67,13 @@ export type TodolistType = {
     order: number
 }
 export type FieldErrorType = {
-    field:string,
-    error:string
+    field: string,
+    error: string
 }
 export type ResponseType<D = {}> = {
     resultCode: number
     messages: Array<string>
-    fieldsErrors?:Array<FieldErrorType>
+    fieldsErrors?: Array<FieldErrorType>
     data: D
 }
 

@@ -1,8 +1,8 @@
 import {TaskPriorities, TaskStatuses, TaskType, todolistsAPI, UpdateTaskModelType} from '../../api/todolists-api';
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {setAppStatusAC} from '../../app/a1-bll/app-reducer';
-import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
-import {AppRootStateType} from '../../app/a1-bll/store';
+import {handleAsyncServerNetworkError, handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
+import {AppRootStateType, ThunkErrorType} from '../../app/a1-bll/store';
 import {asyncActions as asyncTodoListsActions} from './todolists-reducer';
 
 const initialState: TasksStateType = {};
@@ -24,10 +24,11 @@ const removeTask = createAsyncThunk('tasks/removeTask', async (param: { taskId: 
     return {taskId: param.taskId, todolistId: param.todolistId};
 
 });
-const addTask = createAsyncThunk('tasks/addTask', async (param: { title: string, todolistId: string }, {
-    dispatch,
-    rejectWithValue
-}) => {
+const addTask = createAsyncThunk<TaskType, { title: string, todolistId: string }, {
+    rejectValue: ThunkErrorType
+}>('tasks/addTask', async (param,
+                           {dispatch, rejectWithValue}
+) => {
     dispatch(setAppStatusAC({status: 'loading'}));
 
     const res = await todolistsAPI.createTask(param.todolistId, param.title);
@@ -36,12 +37,11 @@ const addTask = createAsyncThunk('tasks/addTask', async (param: { title: string,
             dispatch(setAppStatusAC({status: 'succeeded'}));
             return res.data.data.item;
         } else {
-            handleServerAppError(res.data, dispatch);
-            return rejectWithValue(null);
+            handleServerAppError(res.data, dispatch, false);
+            return rejectWithValue({errors: res.data.messages, fieldsErrors: res.data.fieldsErrors});
         }
-    } catch (error) {
-        handleServerNetworkError(error, dispatch);
-        return rejectWithValue(null);
+    } catch (err) {
+        return handleAsyncServerNetworkError(err, dispatch, rejectWithValue, false);
     }
 
 });
@@ -101,6 +101,7 @@ const slice = createSlice({
             });
         });
         builder.addCase(asyncTodoListsActions.addTodolist.fulfilled, (state, action) => {
+
             state[action.payload.todolist.id] = [];
         });
         builder.addCase(fetchTasks.fulfilled, (state, action) => {
