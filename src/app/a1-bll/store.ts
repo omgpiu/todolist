@@ -1,4 +1,4 @@
-import {combineReducers} from 'redux';
+import {ActionCreatorsMapObject, bindActionCreators, combineReducers} from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import {appReducer} from './app-reducer';
 import {configureStore} from '@reduxjs/toolkit';
@@ -6,6 +6,7 @@ import {useDispatch} from 'react-redux';
 import {tasksReducer} from '../../features/f2-TodolistsList/tasks-reducer';
 import {todolistsReducer} from '../../features/f2-TodolistsList/todolists-reducer';
 import {authReducer} from '../../features/f1-login/l1-bll/auth-reducer';
+import {useMemo} from 'react';
 
 
 // объединяя reducer-ы с помощью combineReducers,
@@ -32,3 +33,10 @@ export type AppRootStateType = ReturnType<typeof rootReducer>
 window.store = store;
 type AppDispatchType = typeof store.dispatch
 export const useAppDispatch = () => useDispatch<AppDispatchType>();
+
+export function useActions<T extends ActionCreatorsMapObject<any>>(actions: T) {
+    const dispatch = useAppDispatch();
+    return useMemo(() => {
+        return bindActionCreators(actions, dispatch);
+    }, []);
+}

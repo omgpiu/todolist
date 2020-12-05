@@ -13,22 +13,19 @@ import {
 import {Menu} from '@material-ui/icons';
 import {ErrorSnackbar} from '../../components/ErrorSnackbar/ErrorSnackbar';
 import {useDispatch, useSelector} from 'react-redux';
-import {AppRootStateType} from '../a1-bll/store';
 import {initializeAppTC} from '../a1-bll/app-reducer';
 import {Redirect, Route, Switch} from 'react-router-dom';
 import {TodolistsList} from '../../features/f2-TodolistsList/TodolistsList';
 import {Login} from '../../features/f1-login/l1-ui/Login';
 import {logoutTC} from '../../features/f1-login/l1-bll/auth-reducer';
-import {selectIsInitialized, selectStatus} from '../a1-bll/selectors';
-import {selectIsLoggedIn} from '../../features/f1-login/l1-bll/authSelectors';
-
-
+import {authSelectors} from '../../features/f1-login/l1-bll';
+import {appSelectors} from '../a1-bll';
 
 
 const App = ({demo = false}: PropsType) => {
-    const status = useSelector(selectStatus);
-    const isInitialized = useSelector(selectIsInitialized);
-    const isLoggedIn = useSelector(selectIsLoggedIn);
+    const status = useSelector(appSelectors.selectStatus);
+    const isInitialized = useSelector(appSelectors.selectIsInitialized);
+    const isLoggedIn = useSelector(authSelectors.selectIsLoggedIn);
     const dispatch = useDispatch();
     useEffect(() => {
 

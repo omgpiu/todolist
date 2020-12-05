@@ -15,7 +15,8 @@ import {FormikHelpers, useFormik} from 'formik';
 import {useAppDispatch} from '../../../app/a1-bll/store';
 import {Redirect} from 'react-router-dom';
 import {loginTC} from '../l1-bll/auth-reducer';
-import {selectIsLoggedIn} from '../l1-bll/authSelectors';
+import {authSelectors} from '../l1-bll';
+
 
 type FormikErrorType = {
     email?: string
@@ -32,7 +33,7 @@ type FormikValuesType = {
 export const Login = () => {
 
     const dispatch = useAppDispatch();
-    const isLoggedIn = useSelector(selectIsLoggedIn);
+    const isLoggedIn = useSelector(authSelectors.selectIsLoggedIn);
 
 
     const formik = useFormik({
