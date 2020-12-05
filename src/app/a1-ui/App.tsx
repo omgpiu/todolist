@@ -18,11 +18,12 @@ import {initializeAppTC} from '../a1-bll/app-reducer';
 import {Redirect, Route, Switch} from 'react-router-dom';
 import {TodolistsList} from '../../features/f2-TodolistsList/TodolistsList';
 import {Login} from '../../features/f1-login/l1-ui/Login';
-import {logoutTC} from '../../features/f1-login/l1-bll/login-reducer';
+import {logoutTC} from '../../features/f1-login/l1-bll/auth-reducer';
 import {selectIsInitialized, selectStatus} from '../a1-bll/selectors';
+import {selectIsLoggedIn} from '../../features/f1-login/l1-bll/authSelectors';
 
 
-const selectIsLoggedIn = (state: AppRootStateType) => state.auth.isLoggedIn;
+
 
 const App = ({demo = false}: PropsType) => {
     const status = useSelector(selectStatus);

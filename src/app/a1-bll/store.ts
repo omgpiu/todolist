@@ -5,7 +5,7 @@ import {configureStore} from '@reduxjs/toolkit';
 import {useDispatch} from 'react-redux';
 import {tasksReducer} from '../../features/f2-TodolistsList/tasks-reducer';
 import {todolistsReducer} from '../../features/f2-TodolistsList/todolists-reducer';
-import {loginReducer} from '../../features/f1-login/l1-bll/login-reducer';
+import {authReducer} from '../../features/f1-login/l1-bll/auth-reducer';
 
 
 // объединяя reducer-ы с помощью combineReducers,
@@ -14,7 +14,7 @@ const rootReducer = combineReducers({
     tasks: tasksReducer,
     todolists: todolistsReducer,
     app: appReducer,
-    auth: loginReducer
+    auth: authReducer
 });
 // непосредственно создаём store
 

@@ -10,14 +10,14 @@ import {configureStore} from '@reduxjs/toolkit';
 import {HashRouter} from 'react-router-dom';
 import {tasksReducer} from '../../features/f2-TodolistsList/tasks-reducer';
 import {todolistsReducer} from '../../features/f2-TodolistsList/todolists-reducer';
-import {loginReducer} from '../../features/f1-login/l1-bll/login-reducer';
+import {authReducer} from '../../features/f1-login/l1-bll/auth-reducer';
 
 
 const rootReducer = combineReducers({
     tasks: tasksReducer,
     todolists: todolistsReducer,
     app: appReducer,
-    auth: loginReducer
+    auth: authReducer
 });
 
 const initialGlobalState: AppRootStateType = {
