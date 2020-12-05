@@ -1,6 +1,6 @@
 import React from 'react';
-import App from './App';
-import {DecoraTor, ReduxStoreProviderDecorator} from '../stories/decorators/ReduxStoreProviderDecorator';
+import App from '../a1-ui/App';
+import {DecoraTor, ReduxStoreProviderDecorator} from '../../stories/decorators/ReduxStoreProviderDecorator';
 
 export default {
     title: 'App Stories',

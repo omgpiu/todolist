@@ -1,6 +1,6 @@
-import {setAppStatusAC} from '../../app/app-reducer';
-import {authAPI, FieldErrorType, LoginParamsType} from '../../api/todolists-api';
-import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
+import {setAppStatusAC} from '../../../app/a1-bll/app-reducer';
+import {authAPI, FieldErrorType, LoginParamsType} from '../../../api/todolists-api';
+import {handleServerAppError, handleServerNetworkError} from '../../../utils/error-utils';
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {AxiosError} from 'axios';
 
@@ -65,7 +65,7 @@ const slice = createSlice({
 });
 
 
-export const authReducer = slice.reducer;
+export const loginReducer = slice.reducer;
 export const {setIsLoggedInAC} = slice.actions;
 
 

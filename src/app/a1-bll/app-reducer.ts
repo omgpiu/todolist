@@ -1,7 +1,7 @@
-import {authAPI} from '../api/todolists-api';
-import {handleServerAppError} from '../utils/error-utils';
-import {setIsLoggedInAC} from '../features/Login/auth-reducer';
+import {authAPI} from '../../api/todolists-api';
+import {handleServerAppError} from '../../utils/error-utils';
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
+import { setIsLoggedInAC } from '../../features/f1-login/l1-bll/login-reducer';
 
 const initialState: InitialStateType = {
     status: 'idle',

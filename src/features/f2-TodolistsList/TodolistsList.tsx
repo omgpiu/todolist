@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {AppRootStateType} from '../../app/store';
+import {AppRootStateType} from '../../app/a1-bll/store';
 import {
     addTodolistTC,
     changeTodolistFilterAC,

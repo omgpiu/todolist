@@ -12,9 +12,9 @@ import {
 import {useSelector} from 'react-redux';
 import {FormikHelpers, useFormik} from 'formik';
 
-import {AppRootStateType, useAppDispatch} from '../../app/store';
+import {AppRootStateType, useAppDispatch} from '../../../app/a1-bll/store';
 import {Redirect} from 'react-router-dom';
-import {loginTC} from './auth-reducer';
+import {loginTC} from '../l1-bll/login-reducer';
 
 type FormikErrorType = {
     email?: string
