@@ -9,7 +9,7 @@ const initialState: InitialStateType = {
     isInitialized: false
 };
 
-export const initializeAppTC = createAsyncThunk('app/initializeApp', async (param, {dispatch, rejectWithValue}) => {
+export const initializeAppTC = createAsyncThunk('app/initializeApp', async (param, {dispatch}) => {
     const res = await authAPI.me();
     if (res.data.resultCode === 0) {
         dispatch(setIsLoggedInAC({isLoggedIn: true}));
