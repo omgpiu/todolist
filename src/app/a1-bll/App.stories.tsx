@@ -5,7 +5,7 @@ import {DecoraTor, ReduxStoreProviderDecorator} from '../../stories/decorators/R
 export default {
     title: 'App Stories',
     component: App,
-    decorators: [ReduxStoreProviderDecorator,DecoraTor]
+    decorators: [ReduxStoreProviderDecorator, DecoraTor]
 };
 
 export const AppBaseExample = (props: any) => {

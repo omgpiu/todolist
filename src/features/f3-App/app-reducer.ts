@@ -22,7 +22,7 @@ export const asyncActions = {
     initializeApp
 };
 
-const slice = createSlice({
+export const slice = createSlice({
     name: 'app',
     initialState,
     reducers: {
@@ -39,8 +39,7 @@ const slice = createSlice({
         });
     }
 });
-export const appReducer = slice.reducer;
-export const {setAppErrorAC, setAppStatusAC} = slice.actions;
+const {setAppErrorAC, setAppStatusAC} = slice.actions;
 
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'

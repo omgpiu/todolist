@@ -5,13 +5,15 @@ import {asyncActions, slice} from './auth-reducer';
 
 const authActions = {
     ...asyncActions,
-    ...slice.actions
+    ...slice.actions,
 
 };
 
+const authReducer = slice.reducer
 
 export {
     authSelectors,
     Login,
-    authActions
+    authActions,
+    authReducer
 };

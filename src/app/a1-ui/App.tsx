@@ -13,11 +13,11 @@ import {
 import {Menu} from '@material-ui/icons';
 import {ErrorSnackbar} from '../../components/ErrorSnackbar/ErrorSnackbar';
 import {useDispatch, useSelector} from 'react-redux';
-import {asyncActions} from '../a1-bll/app-reducer';
 import {Redirect, Route, Switch} from 'react-router-dom';
 import {authActions, authSelectors, Login} from '../../features/f1-login/l1-bll';
-import {appSelectors} from '../a1-bll';
 import {TodolistsList} from '../../features/f2-TodolistsList';
+import {appSelectors} from '../../features/f3-App';
+import {asyncActions} from '../../features/f3-App/app-reducer';
 
 
 const App = ({demo = false}: PropsType) => {

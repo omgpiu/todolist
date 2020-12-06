@@ -1,9 +1,9 @@
-import {changeTodolistEntityStatus, FilterValuesType, TodolistDomainType, todolistsReducer} from './todolists-reducer';
+import {FilterValuesType, TodolistDomainType} from './todolists-reducer';
 import {v1} from 'uuid';
 import {TodolistType} from '../../api/todolists-api';
-import {RequestStatusType} from '../../app/a1-bll/app-reducer';
-import {useActions} from '../../app/a1-bll/store';
-import {todoListsActions} from './index';
+import {todoListsActions, todolistsReducer} from './index';
+import {RequestStatusType} from '../f3-App/app-reducer';
+import {useActions} from '../../utils/redux-utils';
 
 const {
     changeTodolistFilter,
@@ -80,7 +80,7 @@ test('todolists should be added', () => {
 test('correct entity status of todolist should be changed', () => {
     let newStatus: RequestStatusType = 'loading';
 
-    const action = changeTodolistEntityStatus({id: todolistId2, status: newStatus});
+    const action = todoListsActions.changeTodolistEntityStatus({id: todolistId2, status: newStatus});
 
     const endState = todolistsReducer(startState, action);
 

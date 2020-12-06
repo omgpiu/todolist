@@ -1,6 +1,5 @@
 import React, {useCallback, useEffect} from 'react';
 import {useSelector} from 'react-redux';
-import {AppRootStateType, useActions, useAppDispatch} from '../../app/a1-bll/store';
 import {TodolistDomainType} from './todolists-reducer';
 import {TasksStateType} from './tasks-reducer';
 import {Grid} from '@material-ui/core';
@@ -8,7 +7,9 @@ import {AddItemForm, AddItemFormSubmitHelperType} from '../../components/AddItem
 import {Todolist} from './Todolist/Todolist';
 import {Redirect} from 'react-router-dom';
 import {selectIsLoggedIn} from '../f1-login/l1-bll/selectors';
-import {taskActions, todoListsActions} from './index';
+import {todoListsActions} from './index';
+import {AppRootStateType} from '../../app/a1-bll/store';
+import {useActions, useAppDispatch} from '../../utils/redux-utils';
 
 type PropsType = {
     demo?: boolean
@@ -22,8 +23,8 @@ export const TodolistsList: React.FC<PropsType> = ({demo = false}) => {
         addTodolist,
         fetchTodolists,
     } = useActions(todoListsActions);
- const dispatch = useAppDispatch()
-    const addTodolistCallback = useCallback(async (title: string,helper: AddItemFormSubmitHelperType) => {
+    const dispatch = useAppDispatch();
+    const addTodolistCallback = useCallback(async (title: string, helper: AddItemFormSubmitHelperType) => {
 
         let thunk = todoListsActions.addTodolist(title);
         const resultAction = await dispatch(thunk);
@@ -59,7 +60,6 @@ export const TodolistsList: React.FC<PropsType> = ({demo = false}) => {
             {
                 todolists.map(tl => {
                     let allTodolistTasks = tasks[tl.id];
-
                     return <Grid item key={tl.id}>
                         <div style={{width: '300px'}}>
                             <Todolist

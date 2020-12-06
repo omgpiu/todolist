@@ -1,8 +1,8 @@
-import {TodolistDomainType, todolistsReducer} from './todolists-reducer';
-import {tasksReducer, TasksStateType} from './tasks-reducer';
+import {TodolistDomainType} from './todolists-reducer';
+import {TasksStateType} from './tasks-reducer';
 import {TodolistType} from '../../api/todolists-api';
-import {useActions} from '../../app/a1-bll/store';
-import {todoListsActions} from './index';
+import {tasksReducer, todoListsActions, todolistsReducer} from './index';
+import {useActions} from '../../utils/redux-utils';
 
 const {
     addTodolist,

@@ -1,8 +1,8 @@
-import {tasksReducer, TasksStateType} from './tasks-reducer';
+import {TasksStateType} from './tasks-reducer';
 
 import {TaskPriorities, TaskStatuses} from '../../api/todolists-api';
-import {useActions} from '../../app/a1-bll/store';
-import {taskActions, todoListsActions} from './index';
+import {taskActions, tasksReducer, todoListsActions} from './index';
+import {useActions} from '../../utils/redux-utils';
 
 const {removeTodolist, addTodolist, fetchTodolists} = useActions(todoListsActions);
 const {addTask, updateTask, removeTask, fetchTasks} = useActions(taskActions);

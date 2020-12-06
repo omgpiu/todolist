@@ -1,19 +1,19 @@
-import {setAppStatusAC} from '../../../app/a1-bll/app-reducer';
 import {authAPI, LoginParamsType} from '../../../api/todolists-api';
 import {handleServerAppError, handleServerNetworkError} from '../../../utils/error-utils';
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {AxiosError} from 'axios';
 import {ThunkErrorType} from '../../../app/a1-bll/store';
+import {appActions} from '../../f3-App';
 
 
 const login = createAsyncThunk<undefined, LoginParamsType, {
     rejectValue: ThunkErrorType
 }>('auth/login', async (param, {dispatch, rejectWithValue}) => {
-    dispatch(setAppStatusAC({status: 'loading'}));
+    dispatch(appActions.setAppStatusAC({status: 'loading'}));
     try {
         const res = await authAPI.login(param);
         if (res.data.resultCode === 0) {
-            dispatch(setAppStatusAC({status: 'succeeded'}));
+            dispatch(appActions.setAppStatusAC({status: 'succeeded'}));
             return;
 
         } else {
@@ -28,11 +28,11 @@ const login = createAsyncThunk<undefined, LoginParamsType, {
 
 });
 const logout = createAsyncThunk('auth/logout', async (param, {dispatch, rejectWithValue}) => {
-    dispatch(setAppStatusAC({status: 'loading'}));                                         // Сделал деструктуризацию thunkAPI
+    dispatch(appActions.setAppStatusAC({status: 'loading'}));                                         // Сделал деструктуризацию thunkAPI
     const res = await authAPI.logout();
     try {
         if (res.data.resultCode === 0) {
-            dispatch(setAppStatusAC({status: 'succeeded'}));
+            dispatch(appActions.setAppStatusAC({status: 'succeeded'}));
             return;
         } else {
             handleServerAppError(res.data, dispatch);
@@ -73,7 +73,6 @@ export const slice = createSlice({
 });
 
 
-export const authReducer = slice.reducer;
 export const {setIsLoggedInAC} = slice.actions;
 
 
